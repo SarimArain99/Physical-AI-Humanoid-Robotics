@@ -1,0 +1,9 @@
+{
+  "label": "Module 3: NVIDIA Isaac",
+  "position": 4,
+  "className": "sidebar-icon-isaac",
+  "link": {
+    "type": "generated-index",
+    "description": "Advanced AI perception and training with NVIDIA Isaac Sim, Isaac ROS, and hardware-accelerated VSLAM and navigation."
+  }
+}

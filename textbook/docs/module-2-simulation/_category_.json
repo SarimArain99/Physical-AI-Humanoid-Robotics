@@ -1,0 +1,9 @@
+{
+  "label": "Module 2: Simulation",
+  "position": 3,
+  "className": "sidebar-icon-sim",
+  "link": {
+    "type": "generated-index",
+    "description": "Build physics simulations with Gazebo and Unity. Simulate gravity, collisions, sensors, and human-robot interaction."
+  }
+}

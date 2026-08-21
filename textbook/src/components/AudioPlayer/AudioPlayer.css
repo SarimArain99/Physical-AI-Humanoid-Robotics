@@ -1,0 +1,55 @@
+.audio-player-container {
+  position: fixed;
+  bottom: 90px;
+  right: 20px;
+  background-color: var(--surface-elevated);
+  border: 1px solid var(--border);
+  border-radius: 99px;
+  padding: 8px 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  z-index: 100;
+  animation: slideInAudio 0.3s ease-out;
+}
+
+@keyframes slideInAudio {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.audio-btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: var(--primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px;
+  border-radius: 50%;
+  transition: all 0.2s;
+}
+
+.audio-btn:hover {
+  background-color: var(--background);
+}
+
+.audio-btn.active {
+  background-color: var(--primary);
+  color: var(--primary-foreground);
+}
+
+.audio-status {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--foreground);
+  min-width: 60px;
+}

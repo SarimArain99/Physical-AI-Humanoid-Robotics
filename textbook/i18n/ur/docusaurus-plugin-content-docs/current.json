@@ -1,0 +1,46 @@
+{
+  "version.label": {
+    "message": "Next",
+    "description": "The label for version current"
+  },
+  "sidebar.tutorialSidebar.category.Module 1: ROS 2 — The Robotic Nervous System": {
+    "message": "Module 1: ROS 2 — The Robotic Nervous System",
+    "description": "The label for category 'Module 1: ROS 2 — The Robotic Nervous System' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.Module 1: ROS 2 — The Robotic Nervous System.link.generated-index.description": {
+    "message": "Master the middleware that powers modern robots. Learn ROS 2 nodes, topics, services, and how to bridge Python agents to robot controllers.",
+    "description": "The generated-index page description for category 'Module 1: ROS 2 — The Robotic Nervous System' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.Module 2: Simulation — The Digital Twin": {
+    "message": "Module 2: Simulation — The Digital Twin",
+    "description": "The label for category 'Module 2: Simulation — The Digital Twin' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.Module 2: Simulation — The Digital Twin.link.generated-index.description": {
+    "message": "Build physics simulations with Gazebo and Unity. Simulate gravity, collisions, sensors, and human-robot interaction.",
+    "description": "The generated-index page description for category 'Module 2: Simulation — The Digital Twin' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.Module 3: NVIDIA Isaac — The AI-Robot Brain": {
+    "message": "Module 3: NVIDIA Isaac — The AI-Robot Brain",
+    "description": "The label for category 'Module 3: NVIDIA Isaac — The AI-Robot Brain' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.Module 3: NVIDIA Isaac — The AI-Robot Brain.link.generated-index.description": {
+    "message": "Advanced AI perception and training with NVIDIA Isaac Sim, Isaac ROS, and hardware-accelerated VSLAM and navigation.",
+    "description": "The generated-index page description for category 'Module 3: NVIDIA Isaac — The AI-Robot Brain' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.Module 4: VLA — Vision-Language-Action": {
+    "message": "Module 4: VLA — Vision-Language-Action",
+    "description": "The label for category 'Module 4: VLA — Vision-Language-Action' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.Module 4: VLA — Vision-Language-Action.link.generated-index.description": {
+    "message": "The convergence of LLMs and Robotics — voice commands, cognitive planning, and the autonomous humanoid capstone project.",
+    "description": "The generated-index page description for category 'Module 4: VLA — Vision-Language-Action' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.Hardware Requirements": {
+    "message": "Hardware Requirements",
+    "description": "The label for category 'Hardware Requirements' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.Hardware Requirements.link.generated-index.description": {
+    "message": "Workstation specifications, edge computing kits, and robot lab setup options for the Physical AI course.",
+    "description": "The generated-index page description for category 'Hardware Requirements' in sidebar 'tutorialSidebar'"
+  }
+}

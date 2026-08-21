@@ -1,0 +1,9 @@
+{
+  "label": "Module 1: ROS 2",
+  "position": 2,
+  "className": "sidebar-icon-ros2",
+  "link": {
+    "type": "generated-index",
+    "description": "Master the middleware that powers modern robots. Learn ROS 2 nodes, topics, services, and how to bridge Python agents to robot controllers."
+  }
+}

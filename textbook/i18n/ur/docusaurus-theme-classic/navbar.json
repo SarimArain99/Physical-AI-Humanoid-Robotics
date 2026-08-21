@@ -1,0 +1,34 @@
+{
+  "title": {
+    "message": "Physical AI",
+    "description": "The title in the navbar"
+  },
+  "logo.alt": {
+    "message": "Physical AI Logo",
+    "description": "The alt text of navbar logo"
+  },
+  "item.label.📖 Textbook": {
+    "message": "📖 Textbook",
+    "description": "Navbar item with label 📖 Textbook"
+  },
+  "item.label.🤖 Module 1: ROS 2": {
+    "message": "🤖 Module 1: ROS 2",
+    "description": "Navbar item with label 🤖 Module 1: ROS 2"
+  },
+  "item.label.🌐 Module 2: Simulation": {
+    "message": "🌐 Module 2: Simulation",
+    "description": "Navbar item with label 🌐 Module 2: Simulation"
+  },
+  "item.label.🧠 Module 3: Isaac": {
+    "message": "🧠 Module 3: Isaac",
+    "description": "Navbar item with label 🧠 Module 3: Isaac"
+  },
+  "item.label.⚡ Module 4: VLA": {
+    "message": "⚡ Module 4: VLA",
+    "description": "Navbar item with label ⚡ Module 4: VLA"
+  },
+  "item.label.GitHub": {
+    "message": "GitHub",
+    "description": "Navbar item with label GitHub"
+  }
+}

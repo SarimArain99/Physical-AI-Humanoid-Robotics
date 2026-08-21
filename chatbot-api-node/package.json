@@ -1,0 +1,21 @@
+{
+  "name": "chatbot-api-node",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Node.js RAG Chatbot API for Textbook",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "@better-auth/infra": "^0.4.1",
+    "@better-auth/kysely-adapter": "^1.7.1",
+    "better-auth": "^1.7.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "kysely": "^0.29.5",
+    "openai": "^4.55.0",
+    "pg": "^8.23.0"
+  }
+}

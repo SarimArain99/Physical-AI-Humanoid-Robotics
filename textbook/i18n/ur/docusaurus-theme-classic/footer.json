@@ -1,0 +1,62 @@
+{
+  "link.title.Course Modules": {
+    "message": "Course Modules",
+    "description": "The title of the footer links column with title=Course Modules in the footer"
+  },
+  "link.title.Resources": {
+    "message": "Resources",
+    "description": "The title of the footer links column with title=Resources in the footer"
+  },
+  "link.title.Community": {
+    "message": "Community",
+    "description": "The title of the footer links column with title=Community in the footer"
+  },
+  "link.item.label.Introduction": {
+    "message": "Introduction",
+    "description": "The label of footer link with label=Introduction linking to /docs/intro"
+  },
+  "link.item.label.Module 1: ROS 2": {
+    "message": "Module 1: ROS 2",
+    "description": "The label of footer link with label=Module 1: ROS 2 linking to /docs/module-1-ros2/intro-physical-ai"
+  },
+  "link.item.label.Module 2: Simulation": {
+    "message": "Module 2: Simulation",
+    "description": "The label of footer link with label=Module 2: Simulation linking to /docs/module-2-simulation/gazebo-setup"
+  },
+  "link.item.label.Module 3: NVIDIA Isaac": {
+    "message": "Module 3: NVIDIA Isaac",
+    "description": "The label of footer link with label=Module 3: NVIDIA Isaac linking to /docs/module-3-nvidia-isaac/isaac-sdk-sim"
+  },
+  "link.item.label.Module 4: VLA & Capstone": {
+    "message": "Module 4: VLA & Capstone",
+    "description": "The label of footer link with label=Module 4: VLA & Capstone linking to /docs/module-4-vla/humanoid-kinematics"
+  },
+  "link.item.label.Hardware Requirements": {
+    "message": "Hardware Requirements",
+    "description": "The label of footer link with label=Hardware Requirements linking to /docs/hardware/workstation-requirements"
+  },
+  "link.item.label.Assessments": {
+    "message": "Assessments",
+    "description": "The label of footer link with label=Assessments linking to /docs/assessments"
+  },
+  "link.item.label.Panaversity": {
+    "message": "Panaversity",
+    "description": "The label of footer link with label=Panaversity linking to https://panaversity.org"
+  },
+  "link.item.label.GitHub": {
+    "message": "GitHub",
+    "description": "The label of footer link with label=GitHub linking to https://github.com/panaversity"
+  },
+  "link.item.label.PIAIC": {
+    "message": "PIAIC",
+    "description": "The label of footer link with label=PIAIC linking to https://piaic.org"
+  },
+  "link.item.label.GIAIC": {
+    "message": "GIAIC",
+    "description": "The label of footer link with label=GIAIC linking to https://giaic.org"
+  },
+  "copyright": {
+    "message": "Copyright © 2026 Panaversity. Physical AI & Humanoid Robotics Textbook. Built with Docusaurus.",
+    "description": "The footer copyright"
+  }
+}

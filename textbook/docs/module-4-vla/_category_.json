@@ -1,0 +1,9 @@
+{
+  "label": "Module 4: VLA",
+  "position": 5,
+  "className": "sidebar-icon-vla",
+  "link": {
+    "type": "generated-index",
+    "description": "The convergence of LLMs and Robotics - voice commands, cognitive planning, and the autonomous humanoid capstone project."
+  }
+}
