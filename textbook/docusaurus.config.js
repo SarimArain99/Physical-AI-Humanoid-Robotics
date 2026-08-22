@@ -67,7 +67,7 @@ const config = {
         title: 'Physical AI',
         logo: {
           alt: 'Physical AI Logo',
-          src: 'img/logo.svg',
+          src: 'img/docusaurus.png',
         },
         items: [
           {
