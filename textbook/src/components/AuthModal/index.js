@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useSession, signIn, signUp, signOut } from '../../utils/authClient';
 import { UserCircle, X, LogIn, UserPlus, LogOut } from 'lucide-react';
+import { useLocation } from '@docusaurus/router';
 import './AuthModal.css';
 
 export default function AuthModal() {
   const { data: session, isPending } = useSession();
+  const location = useLocation();
   const [isOpen, setIsOpen] = useState(false);
   const [isLoginView, setIsLoginView] = useState(true);
   const [email, setEmail] = useState('');
@@ -33,7 +35,7 @@ export default function AuthModal() {
         btn.onclick = () => setIsOpen(true);
       }
     });
-  }, [session, isPending]);
+  }, [session, isPending, location.pathname]);
 
   if (!isOpen) return null;
 
