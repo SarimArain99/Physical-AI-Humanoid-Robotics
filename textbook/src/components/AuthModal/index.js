@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { useSession, signIn, signUp, signOut } from '../../utils/authClient';
-import { UserCircle, X, LogIn, UserPlus, LogOut } from 'lucide-react';
+import { useSession, signIn, signUp, signOut, authClient } from '../../utils/authClient';
+import { UserCircle, X, LogIn, UserPlus, LogOut, Eye, EyeOff, ArrowLeft, KeyRound } from 'lucide-react';
 import { useLocation } from '@docusaurus/router';
 import './AuthModal.css';
 
@@ -8,13 +8,15 @@ export default function AuthModal() {
   const { data: session, isPending } = useSession();
   const location = useLocation();
   const [isOpen, setIsOpen] = useState(false);
-  const [isLoginView, setIsLoginView] = useState(true);
+  const [view, setView] = useState('login'); // 'login' | 'signup' | 'forgot'
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
   const [softwareBg, setSoftwareBg] = useState('Beginner');
   const [hardwareBg, setHardwareBg] = useState('Beginner');
+  const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
+  const [successMessage, setSuccessMessage] = useState('');
 
   // Attach to the navbar HTML buttons (both desktop and mobile sidebar copies)
   useEffect(() => {
@@ -42,6 +44,7 @@ export default function AuthModal() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
+    setSuccessMessage('');
 
     if (session) {
       await signOut();
@@ -51,15 +54,24 @@ export default function AuthModal() {
     }
 
     try {
-      if (isLoginView) {
+      if (view === 'login') {
         const { error } = await signIn.email({ email, password });
         if (error) throw new Error(error.message);
-      } else {
+        setIsOpen(false);
+        window.location.reload();
+      } else if (view === 'signup') {
         const { error } = await signUp.email({ email, password, name, softwareBg, hardwareBg });
         if (error) throw new Error(error.message);
+        setIsOpen(false);
+        window.location.reload();
+      } else if (view === 'forgot') {
+        const { error } = await authClient.forgetPassword({
+          email,
+          redirectTo: window.location.origin + '/reset-password'
+        });
+        if (error) throw new Error(error.message);
+        setSuccessMessage('If an account exists, a password reset link has been sent to your email.');
       }
-      setIsOpen(false);
-      window.location.reload();
     } catch (err) {
       setError(err.message || 'Authentication failed');
     }
@@ -72,10 +84,12 @@ export default function AuthModal() {
           <div className="auth-modal-title">
             {session ? (
               <><UserCircle size={20} /> Account Profile</>
-            ) : isLoginView ? (
+            ) : view === 'login' ? (
               <><LogIn size={20} /> Login</>
-            ) : (
+            ) : view === 'signup' ? (
               <><UserPlus size={20} /> Create Account</>
+            ) : (
+              <><KeyRound size={20} /> Reset Password</>
             )}
           </div>
           <button className="auth-modal-close" onClick={() => setIsOpen(false)}>
@@ -96,9 +110,10 @@ export default function AuthModal() {
         ) : (
           <div className="auth-modal-content">
             {error && <div className="alert alert--danger auth-error">{error}</div>}
+            {successMessage && <div className="alert alert--success auth-success">{successMessage}</div>}
             
             <form onSubmit={handleSubmit} className="auth-form">
-              {!isLoginView && (
+              {view === 'signup' && (
                 <>
                   <div className="form-group">
                     <label>Full Name</label>
@@ -122,26 +137,81 @@ export default function AuthModal() {
                   </div>
                 </>
               )}
+              
               <div className="form-group">
                 <label>Email Address</label>
                 <input type="email" value={email} onChange={e => setEmail(e.target.value)} required placeholder="email@example.com" />
               </div>
-              <div className="form-group">
-                <label>Password</label>
-                <input type="password" value={password} onChange={e => setPassword(e.target.value)} required placeholder="••••••••" />
-              </div>
-              <button type="submit" className="button button--primary button--block">
-                {isLoginView ? 'Sign In' : 'Sign Up'}
+
+              {view !== 'forgot' && (
+                <div className="form-group">
+                  <label>Password</label>
+                  <div className="password-input-wrapper" style={{ position: 'relative' }}>
+                    <input 
+                      type={showPassword ? "text" : "password"} 
+                      value={password} 
+                      onChange={e => setPassword(e.target.value)} 
+                      required 
+                      placeholder="••••••••" 
+                      style={{ paddingRight: '40px', width: '100%' }}
+                    />
+                    <button 
+                      type="button" 
+                      onClick={() => setShowPassword(!showPassword)}
+                      className="password-toggle-btn"
+                      style={{ 
+                        position: 'absolute', 
+                        right: '12px', 
+                        top: '50%', 
+                        transform: 'translateY(-50%)', 
+                        background: 'none', 
+                        border: 'none', 
+                        color: 'var(--foreground-light, #888)', 
+                        cursor: 'pointer',
+                        padding: 0,
+                        display: 'flex',
+                        alignItems: 'center'
+                      }}
+                    >
+                      {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
+                    </button>
+                  </div>
+                  
+                  {view === 'login' && (
+                    <div style={{ textAlign: 'right', marginTop: '6px' }}>
+                      <button 
+                        type="button" 
+                        className="auth-link-btn"
+                        onClick={() => { setView('forgot'); setError(''); setSuccessMessage(''); }}
+                        style={{ background: 'none', border: 'none', color: 'var(--primary)', cursor: 'pointer', fontSize: '0.85rem', padding: 0 }}
+                      >
+                        Forgot Password?
+                      </button>
+                    </div>
+                  )}
+                </div>
+              )}
+
+              <button type="submit" className="button button--primary button--block" style={{ marginTop: '16px' }}>
+                {view === 'login' ? 'Sign In' : view === 'signup' ? 'Sign Up' : 'Send Reset Link'}
               </button>
             </form>
 
             <div className="auth-toggle">
-              <span className="auth-toggle-text">
-                {isLoginView ? "Don't have an account? " : "Already have an account? "}
-              </span>
-              <button type="button" className="auth-toggle-btn" onClick={() => setIsLoginView(!isLoginView)}>
-                {isLoginView ? 'Sign Up' : 'Log In'}
-              </button>
+              {view === 'forgot' ? (
+                <button type="button" className="auth-toggle-btn" onClick={() => { setView('login'); setError(''); setSuccessMessage(''); }} style={{ display: 'flex', alignItems: 'center', gap: '6px', margin: '0 auto' }}>
+                  <ArrowLeft size={14} /> Back to Login
+                </button>
+              ) : (
+                <>
+                  <span className="auth-toggle-text">
+                    {view === 'login' ? "Don't have an account? " : "Already have an account? "}
+                  </span>
+                  <button type="button" className="auth-toggle-btn" onClick={() => { setView(view === 'login' ? 'signup' : 'login'); setError(''); setSuccessMessage(''); }}>
+                    {view === 'login' ? 'Sign Up' : 'Log In'}
+                  </button>
+                </>
+              )}
             </div>
           </div>
         )}

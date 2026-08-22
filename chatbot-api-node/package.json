@@ -16,6 +16,7 @@
     "express": "^4.19.2",
     "express-rate-limit": "^8.6.2",
     "kysely": "^0.29.5",
+    "nodemailer": "^9.0.5",
     "openai": "^4.55.0",
     "pg": "^8.23.0"
   }
