@@ -263,3 +263,66 @@
   background: var(--background);
   color: var(--foreground);
 }
+
+/* Mobile Responsive Adjustments for ChapterTools */
+@media (max-width: 768px) {
+  .personalize-bar {
+    bottom: 84px;
+    width: calc(100% - 32px);
+    max-width: 420px;
+    padding: 10px 14px;
+    border-radius: 12px;
+  }
+
+  .personalize-bar-inner {
+    width: 100%;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+    position: relative;
+  }
+
+  .personalize-bar-title {
+    font-size: 0.85rem;
+    padding-right: 28px;
+  }
+
+  .personalize-close {
+    position: absolute;
+    top: 0;
+    right: 0;
+  }
+
+  .segmented-control {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 4px;
+    padding: 3px;
+  }
+
+  .segment-btn {
+    padding: 8px 10px;
+    font-size: 0.8rem;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .translation-panel {
+    max-width: 100%;
+    width: 100%;
+  }
+
+  .translation-panel-header {
+    padding: 14px 18px;
+  }
+
+  .translation-panel-content {
+    padding: 18px;
+  }
+
+  .urdu-text {
+    font-size: 1.1rem;
+    line-height: 2.0;
+  }
+}

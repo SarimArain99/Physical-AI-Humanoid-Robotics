@@ -170,3 +170,38 @@ html[data-theme='dark'] .quiz-option-btn.wrong {
   from { opacity: 0; transform: translateY(10px); }
   to { opacity: 1; transform: translateY(0); }
 }
+
+@media (max-width: 768px) {
+  .quiz-widget-container {
+    padding: 20px 16px;
+    margin-top: 24px;
+    border-radius: 12px;
+  }
+
+  .quiz-header h3 {
+    font-size: 1.25rem;
+  }
+
+  .quiz-question {
+    font-size: 1.05rem;
+    margin-bottom: 16px;
+  }
+
+  .quiz-option-btn {
+    padding: 12px 14px;
+    font-size: 0.95rem;
+  }
+
+  .quiz-footer {
+    flex-direction: column;
+    gap: 12px;
+    align-items: stretch;
+  }
+
+  .quiz-next-btn {
+    width: 100%;
+    padding: 12px;
+    font-size: 1rem;
+    text-align: center;
+  }
+}

@@ -306,35 +306,50 @@ tr:nth-child(even) {
 }
 
 /* =========================================
-   8. MOBILE MENU BEAUTIFICATION
+   8. MOBILE MENU & BUTTON STYLING
 ========================================= */
 
 .navbar-sidebar {
   background-color: var(--surface) !important;
-  box-shadow: 4px 0 24px rgba(0,0,0,0.1);
+  box-shadow: 4px 0 24px rgba(0, 0, 0, 0.1);
 }
 
 .navbar-sidebar__items {
-  padding: 1rem;
+  padding: 1rem !important;
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 8px;
 }
 
 .navbar-sidebar__items > .menu__list-item {
-  margin-bottom: 8px;
+  margin-bottom: 4px;
 }
 
-/* Make our injected HTML buttons span full width in mobile menu */
-.navbar-sidebar__item > button {
+/* Ensure navbar items inside mobile sidebar take full width */
+.navbar-sidebar .navbar__item {
   width: 100% !important;
-  justify-content: center;
+  padding: 4px 0 !important;
   margin: 0 !important;
-  padding: 12px !important;
-  font-size: 1rem;
 }
 
-/* Hide the "Back to main menu" button */
+/* Style all injected HTML buttons inside the mobile drawer */
+.navbar-sidebar .nav-personalize-btn,
+.navbar-sidebar .nav-translate-btn,
+.navbar-sidebar .nav-login-btn,
+.navbar-sidebar .navbar__item button {
+  width: 100% !important;
+  justify-content: center !important;
+  margin: 4px 0 !important;
+  margin-left: 0 !important;
+  padding: 10px 16px !important;
+  font-size: 0.95rem !important;
+  border-radius: 8px !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+}
+
+/* Hide the redundant "Back to main menu" button */
 .navbar-sidebar__back {
   display: none !important;
 }

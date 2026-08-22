@@ -274,9 +274,18 @@
 }
 
 @media (max-width: 768px) {
+  .chat-fab {
+    bottom: 24px;
+    right: 16px;
+    width: 48px;
+    height: 48px;
+  }
+
   .chat-panel {
     width: calc(100% - 32px);
     right: 16px;
     bottom: 80px;
+    height: calc(100vh - 120px);
+    max-height: 540px;
   }
 }
