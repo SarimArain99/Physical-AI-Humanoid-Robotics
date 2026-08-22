@@ -453,6 +453,26 @@ app.get("/api/health", (req, res) => {
   res.json({ status: "ok" });
 });
 
+// Secure diagnostics endpoint
+app.get("/api/diagnostics", (req, res) => {
+  const maskString = (str) => {
+    if (!str) return "NOT_SET";
+    if (str.length <= 8) return "SET (too short to mask)";
+    return `${str.substring(0, 4)}...${str.substring(str.length - 4)}`;
+  };
+  
+  res.json({
+    status: "online",
+    VERCEL_ENV: process.env.VERCEL ? "true" : "false",
+    DATABASE_URL: maskString(process.env.DATABASE_URL),
+    OPENAI_API_KEY: maskString(process.env.OPENAI_API_KEY),
+    BETTER_AUTH_SECRET: maskString(process.env.BETTER_AUTH_SECRET),
+    BETTER_AUTH_URL: process.env.BETTER_AUTH_URL || "NOT_SET",
+    CORS_ORIGINS: process.env.CORS_ORIGINS || "NOT_SET",
+    allowedOriginsFromEnv: allowedOrigins
+  });
+});
+
 const PORT = process.env.PORT || 8000;
 if (!process.env.VERCEL) {
   app.listen(PORT, () => {
