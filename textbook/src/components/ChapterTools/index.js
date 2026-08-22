@@ -119,20 +119,35 @@ export default function ChapterTools() {
     const isDocPage = location.pathname.startsWith('/docs/');
     
     const updateVisibility = () => {
+      // Only target buttons in the desktop navbar, NOT the mobile sidebar
+      // Sidebar buttons are styled separately via CSS
       const translateBtns = document.querySelectorAll('.nav-translate-btn');
       const personalizeBtns = document.querySelectorAll('.nav-personalize-btn');
       
       const targetDisplay = isDocPage ? 'flex' : 'none';
 
       translateBtns.forEach(btn => {
+        // Skip buttons inside the mobile sidebar — let CSS handle those
+        if (btn.closest('.navbar-sidebar')) return;
         if (btn.style.display !== targetDisplay) {
           btn.style.setProperty('display', targetDisplay, 'important');
         }
       });
       personalizeBtns.forEach(btn => {
+        if (btn.closest('.navbar-sidebar')) return;
         if (btn.style.display !== targetDisplay) {
           btn.style.setProperty('display', targetDisplay, 'important');
         }
+      });
+
+      // For sidebar buttons: show on doc pages, hide on non-doc pages
+      const sidebarTranslate = document.querySelectorAll('.navbar-sidebar .nav-translate-btn');
+      const sidebarPersonalize = document.querySelectorAll('.navbar-sidebar .nav-personalize-btn');
+      sidebarTranslate.forEach(btn => {
+        btn.style.setProperty('display', isDocPage ? 'flex' : 'none', 'important');
+      });
+      sidebarPersonalize.forEach(btn => {
+        btn.style.setProperty('display', isDocPage ? 'flex' : 'none', 'important');
       });
     };
 
