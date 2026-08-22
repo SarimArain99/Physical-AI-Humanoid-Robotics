@@ -8,13 +8,17 @@ const pool = new Pool({
   connectionString: process.env.DATABASE_URL
 });
 
+const allowedOrigins = process.env.CORS_ORIGINS 
+  ? process.env.CORS_ORIGINS.split(",").map(o => o.trim()) 
+  : [];
+
 export const auth = betterAuth({
   database: pool,
   secret: process.env.BETTER_AUTH_SECRET,
   emailAndPassword: {
     enabled: true,
   },
-  trustedOrigins: ["http://localhost:3000", "http://localhost:3001"],
+  trustedOrigins: ["http://localhost:3000", "http://localhost:3001", ...allowedOrigins],
   user: {
     additionalFields: {
       softwareBg: {

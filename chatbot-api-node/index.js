@@ -10,8 +10,25 @@ import { auth } from "./auth.js";
 const { Pool } = pg;
 
 const app = express();
+const allowedOrigins = process.env.CORS_ORIGINS 
+  ? process.env.CORS_ORIGINS.split(",").map(o => o.trim()) 
+  : [];
+
 app.use(cors({
-  origin: ["http://localhost:3000", "http://localhost:3001"],
+  origin: function (origin, callback) {
+    if (!origin) return callback(null, true);
+    
+    const isAllowed = allowedOrigins.includes(origin) || 
+      origin.startsWith('http://localhost') || 
+      origin.startsWith('http://127.0.0.1') || 
+      origin.endsWith('.vercel.app');
+      
+    if (isAllowed) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
   credentials: true,
 }));
 app.use(express.json());
