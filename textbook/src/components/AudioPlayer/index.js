@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Play, Pause, Square } from 'lucide-react';
+import { useLocation } from '@docusaurus/router';
 import './AudioPlayer.css';
 
 export default function AudioPlayer() {
+  const location = useLocation();
   const [isPlaying, setIsPlaying] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
   const [isSupported, setIsSupported] = useState(true);
@@ -72,7 +74,8 @@ export default function AudioPlayer() {
     setIsPaused(false);
   };
 
-  if (!isSupported) return null;
+  const isDocPage = location.pathname.startsWith('/docs/');
+  if (!isSupported || !isDocPage) return null;
 
   return (
     <div className="audio-player-container">

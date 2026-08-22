@@ -18,25 +18,48 @@ export default function AuthModal() {
   const [error, setError] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
 
-  // Attach to the navbar HTML buttons (both desktop and mobile sidebar copies)
+  // Handle updating button labels based on session
   useEffect(() => {
-    const btns = document.querySelectorAll('.nav-login-btn');
-    if (btns.length === 0) return;
+    const updateButtons = () => {
+      const btns = document.querySelectorAll('.nav-login-btn');
+      if (btns.length === 0 || isPending) return;
 
-    if (isPending) {
-      // Don't update innerText while waiting so it doesn't flicker
-      return;
-    }
+      btns.forEach(btn => {
+        if (session) {
+          btn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user" style="margin-right: 6px; vertical-align: -3px;"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> ${session.user.name || session.user.email}`;
+        } else {
+          btn.innerHTML = 'Login';
+        }
+      });
+    };
 
-    btns.forEach(btn => {
-      if (session) {
-        btn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user" style="margin-right: 6px; vertical-align: -3px;"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> ${session.user.name || session.user.email}`;
-        btn.onclick = () => setIsOpen(true);
-      } else {
-        btn.innerText = 'Login';
-        btn.onclick = () => setIsOpen(true);
-      }
+    updateButtons();
+
+    // Watch for dynamic DOM changes (e.g. mobile sidebar opening/closing) to update labels
+    const observer = new MutationObserver(() => {
+      updateButtons();
     });
+
+    observer.observe(document.body, { childList: true, subtree: true });
+    
+    // Also use global event delegation to handle clicks on any .nav-login-btn
+    const handleGlobalClick = (e) => {
+      const btn = e.target.closest('.nav-login-btn');
+      if (btn) {
+        e.preventDefault();
+        // Close Docusaurus mobile sidebar if open
+        const closeBtn = document.querySelector('.navbar-sidebar__close');
+        if (closeBtn) closeBtn.click();
+        setIsOpen(true);
+      }
+    };
+
+    document.addEventListener('click', handleGlobalClick);
+
+    return () => {
+      observer.disconnect();
+      document.removeEventListener('click', handleGlobalClick);
+    };
   }, [session, isPending, location.pathname]);
 
   if (!isOpen) return null;

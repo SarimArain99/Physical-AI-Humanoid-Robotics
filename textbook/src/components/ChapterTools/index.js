@@ -2,11 +2,13 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useSession } from '../../utils/authClient';
 import { Globe, X, Loader2, BookOpen, ChevronRight, Layers } from 'lucide-react';
 import { marked } from 'marked';
+import { useLocation } from '@docusaurus/router';
 import './ChapterTools.css';
 import { getApiUrl } from '@site/src/utils/apiConfig';
 
 export default function ChapterTools() {
   const { data: session } = useSession();
+  const location = useLocation();
   
   // Translation State
   const [isTranslating, setIsTranslating] = useState(false);
@@ -106,14 +108,41 @@ export default function ChapterTools() {
     }
   };
 
-  // Setup event delegation for navbar buttons
+  // Setup event delegation and path-based visibility for navbar buttons
   useEffect(() => {
+    const isDocPage = location.pathname.startsWith('/docs/');
+    
+    const updateVisibility = () => {
+      const translateBtns = document.querySelectorAll('.nav-translate-btn');
+      const personalizeBtns = document.querySelectorAll('.nav-personalize-btn');
+      
+      translateBtns.forEach(btn => {
+        btn.style.setProperty('display', isDocPage ? 'flex' : 'none', 'important');
+      });
+      personalizeBtns.forEach(btn => {
+        btn.style.setProperty('display', isDocPage ? 'flex' : 'none', 'important');
+      });
+    };
+
+    updateVisibility();
+
+    // Watch for dynamic DOM changes (mobile menu sidebar)
+    const observer = new MutationObserver(() => {
+      updateVisibility();
+    });
+    observer.observe(document.body, { childList: true, subtree: true });
+
     const handleGlobalClick = (e) => {
       const translateBtn = e.target.closest('.nav-translate-btn') || e.target.closest('#nav-translate-btn');
       const personalizeBtn = e.target.closest('.nav-personalize-btn') || e.target.closest('#nav-personalize-btn');
       
       if (translateBtn) {
         e.preventDefault();
+        
+        // Close Docusaurus mobile sidebar if open
+        const closeBtn = document.querySelector('.navbar-sidebar__close');
+        if (closeBtn) closeBtn.click();
+
         if (!session) {
           const loginBtn = document.querySelector('.nav-login-btn');
           if (loginBtn) loginBtn.click();
@@ -124,6 +153,11 @@ export default function ChapterTools() {
       
       if (personalizeBtn) {
         e.preventDefault();
+        
+        // Close Docusaurus mobile sidebar if open
+        const closeBtn = document.querySelector('.navbar-sidebar__close');
+        if (closeBtn) closeBtn.click();
+
         if (!session) {
           const loginBtn = document.querySelector('.nav-login-btn');
           if (loginBtn) loginBtn.click();
@@ -134,8 +168,11 @@ export default function ChapterTools() {
     };
     
     document.addEventListener('click', handleGlobalClick);
-    return () => document.removeEventListener('click', handleGlobalClick);
-  }, [session]);
+    return () => {
+      observer.disconnect();
+      document.removeEventListener('click', handleGlobalClick);
+    };
+  }, [session, location.pathname]);
 
   const handleLevelChange = async (level) => {
     if (activeLevel === level) return;

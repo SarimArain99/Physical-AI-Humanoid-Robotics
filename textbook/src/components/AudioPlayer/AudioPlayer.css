@@ -53,3 +53,14 @@
   color: var(--foreground);
   min-width: 60px;
 }
+
+@media (max-width: 768px) {
+  .audio-player-container {
+    bottom: 32px;
+    left: 16px;
+    right: auto;
+    padding: 6px 12px;
+    gap: 8px;
+    z-index: 99;
+  }
+}
