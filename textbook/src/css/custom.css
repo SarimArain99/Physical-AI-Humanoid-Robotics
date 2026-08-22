@@ -353,3 +353,17 @@ tr:nth-child(even) {
 .navbar-sidebar__close:hover {
   opacity: 1;
 }
+
+/* Move hamburger menu toggle to the right in mobile view */
+@media (max-width: 996px) {
+  .navbar__toggle {
+    order: 10 !important;
+    margin-right: 0 !important;
+    margin-left: auto !important;
+  }
+  .navbar__brand {
+    order: 1 !important;
+    margin-right: auto !important;
+    margin-left: 0 !important;
+  }
+}
