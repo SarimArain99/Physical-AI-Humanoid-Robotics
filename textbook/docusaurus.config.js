@@ -96,6 +96,11 @@ const config = {
             position: 'right',
             value: '<button id="nav-login-btn" class="button button--primary button--sm" style="margin-left:12px;">Login</button>',
           },
+          {
+            type: 'localeDropdown',
+            position: 'right',
+            style: { marginLeft: '12px' }
+          },
         ],
       },
       footer: {
