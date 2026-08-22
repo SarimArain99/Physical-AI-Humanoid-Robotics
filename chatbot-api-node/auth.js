@@ -9,8 +9,11 @@ const pool = new Pool({
 });
 
 const allowedOrigins = process.env.CORS_ORIGINS 
-  ? process.env.CORS_ORIGINS.split(",").map(o => o.trim()) 
+  ? process.env.CORS_ORIGINS.split(",").map(o => o.trim().replace(/\/$/, "")) 
   : [];
+
+const trustedOrigins = ["http://localhost:3000", "http://localhost:3001", ...allowedOrigins];
+console.log("Better Auth: Configured Trusted Origins ->", trustedOrigins);
 
 export const auth = betterAuth({
   database: pool,
@@ -18,7 +21,7 @@ export const auth = betterAuth({
   emailAndPassword: {
     enabled: true,
   },
-  trustedOrigins: ["http://localhost:3000", "http://localhost:3001", ...allowedOrigins],
+  trustedOrigins: trustedOrigins,
   user: {
     additionalFields: {
       softwareBg: {
