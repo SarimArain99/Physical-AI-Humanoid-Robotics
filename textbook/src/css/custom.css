@@ -367,16 +367,3 @@ tr:nth-child(even) {
     margin-left: 0 !important;
   }
 }
-
-/* Slide in mobile menu sidebar from the right instead of the left */
-@media (max-width: 996px) {
-  .navbar-sidebar {
-    left: auto !important;
-    right: 0 !important;
-    transform: translate3d(100%, 0, 0) !important;
-    box-shadow: -4px 0 24px rgba(0, 0, 0, 0.15) !important;
-  }
-  .navbar-sidebar--show {
-    transform: translate3d(0, 0, 0) !important;
-  }
-}
