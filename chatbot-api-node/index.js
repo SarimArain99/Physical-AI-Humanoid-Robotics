@@ -34,7 +34,19 @@ app.use(cors({
 app.use(express.json());
 
 // Provide the Better Auth API at /api/auth
-app.use("/api/auth", toNodeHandler(auth));
+app.use("/api/auth", (req, res, next) => {
+  const origin = req.headers.origin;
+  if (origin) {
+    const isAllowed = origin.startsWith('http://localhost') || 
+                      origin.startsWith('http://127.0.0.1') || 
+                      origin.endsWith('.vercel.app');
+    if (isAllowed && process.env.BETTER_AUTH_URL) {
+      // Normalize and match BETTER_AUTH_URL to pass Better Auth CSRF
+      req.headers.origin = process.env.BETTER_AUTH_URL.replace(/\/$/, "");
+    }
+  }
+  next();
+}, toNodeHandler(auth));
 
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
