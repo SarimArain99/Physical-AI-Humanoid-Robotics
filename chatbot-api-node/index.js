@@ -425,6 +425,10 @@ app.get("/api/health", (req, res) => {
 });
 
 const PORT = process.env.PORT || 8000;
-app.listen(PORT, () => {
-  console.log(`Node Chatbot API running on port ${PORT}`);
-});
+if (!process.env.VERCEL) {
+  app.listen(PORT, () => {
+    console.log(`Node Chatbot API running on port ${PORT}`);
+  });
+}
+
+export default app;
