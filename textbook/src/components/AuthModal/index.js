@@ -14,23 +14,25 @@ export default function AuthModal() {
   const [hardwareBg, setHardwareBg] = useState('Beginner');
   const [error, setError] = useState('');
 
-  // Attach to the navbar HTML button
+  // Attach to the navbar HTML buttons (both desktop and mobile sidebar copies)
   useEffect(() => {
-    const btn = document.getElementById('nav-login-btn');
-    if (!btn) return;
+    const btns = document.querySelectorAll('.nav-login-btn');
+    if (btns.length === 0) return;
 
     if (isPending) {
       // Don't update innerText while waiting so it doesn't flicker
       return;
     }
 
-    if (session) {
-      btn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user" style="margin-right: 6px; vertical-align: -3px;"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> ${session.user.name || session.user.email}`;
-      btn.onclick = () => setIsOpen(true);
-    } else {
-      btn.innerText = 'Login';
-      btn.onclick = () => setIsOpen(true);
-    }
+    btns.forEach(btn => {
+      if (session) {
+        btn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user" style="margin-right: 6px; vertical-align: -3px;"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> ${session.user.name || session.user.email}`;
+        btn.onclick = () => setIsOpen(true);
+      } else {
+        btn.innerText = 'Login';
+        btn.onclick = () => setIsOpen(true);
+      }
+    });
   }, [session, isPending]);
 
   if (!isOpen) return null;

@@ -89,12 +89,12 @@ const config = {
           {
             type: 'html',
             position: 'right',
-            value: '<button id="nav-translate-btn" class="button button--secondary button--sm" style="display:flex; align-items:center; gap:6px; margin-left: 12px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg> Translate</button>',
+            value: '<button id="nav-translate-btn" class="button button--secondary button--sm nav-translate-btn" style="display:flex; align-items:center; gap:6px; margin-left: 12px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg> Translate</button>',
           },
           {
             type: 'html',
             position: 'right',
-            value: '<button id="nav-login-btn" class="button button--primary button--sm" style="margin-left:12px;">Login</button>',
+            value: '<button id="nav-login-btn" class="button button--primary button--sm nav-login-btn" style="margin-left:12px;">Login</button>',
           },
         ],
       },

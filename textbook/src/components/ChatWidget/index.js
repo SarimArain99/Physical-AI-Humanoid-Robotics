@@ -149,7 +149,7 @@ export default function ChatWidget() {
         className={`chat-fab ${isOpen ? 'chat-fab--open' : ''}`}
         onClick={() => {
           if (!session && !isOpen) {
-            const loginBtn = document.getElementById('nav-login-btn');
+            const loginBtn = document.querySelector('.nav-login-btn');
             if (loginBtn) loginBtn.click();
             return;
           }

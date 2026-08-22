@@ -109,13 +109,13 @@ export default function ChapterTools() {
   // Setup event delegation for navbar buttons
   useEffect(() => {
     const handleGlobalClick = (e) => {
-      const translateBtn = e.target.closest('#nav-translate-btn');
-      const personalizeBtn = e.target.closest('#nav-personalize-btn');
+      const translateBtn = e.target.closest('.nav-translate-btn') || e.target.closest('#nav-translate-btn');
+      const personalizeBtn = e.target.closest('.nav-personalize-btn') || e.target.closest('#nav-personalize-btn');
       
       if (translateBtn) {
         e.preventDefault();
         if (!session) {
-          const loginBtn = document.getElementById('nav-login-btn');
+          const loginBtn = document.querySelector('.nav-login-btn');
           if (loginBtn) loginBtn.click();
           return;
         }
@@ -125,7 +125,7 @@ export default function ChapterTools() {
       if (personalizeBtn) {
         e.preventDefault();
         if (!session) {
-          const loginBtn = document.getElementById('nav-login-btn');
+          const loginBtn = document.querySelector('.nav-login-btn');
           if (loginBtn) loginBtn.click();
           return;
         }
