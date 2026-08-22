@@ -7,9 +7,11 @@ import path from "path";
 import pg from "pg";
 import { toNodeHandler } from "better-auth/node";
 import { auth } from "./auth.js";
+import rateLimit from "express-rate-limit";
 const { Pool } = pg;
 
 const app = express();
+app.set("trust proxy", 1);
 const allowedOrigins = process.env.CORS_ORIGINS 
   ? process.env.CORS_ORIGINS.split(",").map(o => o.trim()) 
   : [];
@@ -47,6 +49,23 @@ app.use("/api/auth", (req, res, next) => {
   }
   next();
 }, toNodeHandler(auth));
+
+// Configure rate limits for AI endpoints to prevent API key abuse
+const aiLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 60, // Limit each IP to 60 requests per windowMs
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { error: "Too many AI requests. Please try again in 15 minutes." }
+});
+
+// Apply rate limits to all OpenAI-linked endpoints
+app.use("/api/chat", aiLimiter);
+app.use("/api/chat/selected", aiLimiter);
+app.use("/api/translate", aiLimiter);
+app.use("/api/personalize", aiLimiter);
+app.use("/api/quiz", aiLimiter);
+app.use("/api/flashcards", aiLimiter);
 
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
@@ -412,6 +431,7 @@ app.get("/api/progress/:userId", async (req, res) => {
   try {
     const userId = req.params.userId;
     const result = await pool.query(`SELECT page_id, quiz_score, completed, created_at FROM user_progress WHERE user_id = $1 ORDER BY created_at DESC`, [userId]);
+    res.setHeader("Cache-Control", "no-store, no-cache, must-revalidate, proxy-revalidate");
     res.json({ progress: result.rows });
   } catch (err) {
     res.status(500).json({ error: "Database error" });

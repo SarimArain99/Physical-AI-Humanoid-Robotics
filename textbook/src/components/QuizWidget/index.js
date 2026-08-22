@@ -93,7 +93,7 @@ export default function QuizWidget() {
       
       // Save progress to database
       if (session?.user?.id) {
-        const finalScore = selectedOption === questions[currentIndex].answerIndex ? score + 1 : score;
+        const finalScore = score;
         const total = questions.length;
         const percentage = Math.round((finalScore / total) * 100);
         
@@ -179,6 +179,27 @@ export default function QuizWidget() {
             </div>
           )}
         </div>
+      </div>
+    );
+  }
+
+  if (!session) {
+    return (
+      <div className="quiz-widget-container locked" style={{ textAlign: 'center', padding: '30px 20px', border: '1px dashed var(--border)', borderRadius: '12px', background: 'var(--surface-elevated)' }}>
+        <div className="quiz-header">
+          <h3>Test Your Knowledge 🧠</h3>
+          <p>AI-generated interactive quizzes are available exclusively for registered students to track course progress.</p>
+        </div>
+        <button 
+          className="button button--primary"
+          style={{ marginTop: '16px', padding: '10px 24px', fontWeight: 'bold' }}
+          onClick={() => {
+            const loginBtn = document.querySelector('.nav-login-btn');
+            if (loginBtn) loginBtn.click();
+          }}
+        >
+          Login to Unlock Quizzes
+        </button>
       </div>
     );
   }
