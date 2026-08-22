@@ -5,7 +5,7 @@ import { themes as prismThemes } from 'prism-react-renderer';
 const config = {
   title: 'Physical AI & Humanoid Robotics',
   tagline: 'Bridging the gap between digital intelligence and physical embodiment',
-  favicon: 'img/favicon.ico',
+  favicon: 'img/docusaurus.png',
 
   future: {
     v4: true,
