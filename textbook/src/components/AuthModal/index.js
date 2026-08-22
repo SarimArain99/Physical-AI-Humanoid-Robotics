@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { useSession, signIn, signUp, signOut, authClient } from '../../utils/authClient';
 import { UserCircle, X, LogIn, UserPlus, LogOut, Eye, EyeOff, ArrowLeft, KeyRound } from 'lucide-react';
 import { useLocation } from '@docusaurus/router';
@@ -24,20 +24,24 @@ export default function AuthModal() {
       const btns = document.querySelectorAll('.nav-login-btn');
       if (btns.length === 0 || isPending) return;
 
+      const targetHTML = session
+        ? `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user" style="margin-right: 6px; vertical-align: -3px;"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> ${session.user.name || session.user.email}`
+        : 'Login';
+
       btns.forEach(btn => {
-        if (session) {
-          btn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user" style="margin-right: 6px; vertical-align: -3px;"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> ${session.user.name || session.user.email}`;
-        } else {
-          btn.innerHTML = 'Login';
+        if (btn.innerHTML !== targetHTML) {
+          btn.innerHTML = targetHTML;
         }
       });
     };
 
     updateButtons();
 
-    // Watch for dynamic DOM changes (e.g. mobile sidebar opening/closing) to update labels
+    // Debounced MutationObserver to prevent cascading DOM mutation lag
+    let debounceTimer = null;
     const observer = new MutationObserver(() => {
-      updateButtons();
+      if (debounceTimer) clearTimeout(debounceTimer);
+      debounceTimer = setTimeout(updateButtons, 150);
     });
 
     observer.observe(document.body, { childList: true, subtree: true });
@@ -57,6 +61,7 @@ export default function AuthModal() {
     document.addEventListener('click', handleGlobalClick);
 
     return () => {
+      if (debounceTimer) clearTimeout(debounceTimer);
       observer.disconnect();
       document.removeEventListener('click', handleGlobalClick);
     };
@@ -81,12 +86,10 @@ export default function AuthModal() {
         const { error } = await signIn.email({ email, password });
         if (error) throw new Error(error.message);
         setIsOpen(false);
-        window.location.reload();
       } else if (view === 'signup') {
-        const { error } = await signUp.email({ email, password, name, softwareBg, hardwareBg });
+        const { error } = await signUp.email({ email, password, name });
         if (error) throw new Error(error.message);
         setIsOpen(false);
-        window.location.reload();
       } else if (view === 'forgot') {
         const { error } = await authClient.forgetPassword({
           email,
@@ -145,17 +148,17 @@ export default function AuthModal() {
                   <div className="form-group">
                     <label>Software Background</label>
                     <select value={softwareBg} onChange={e => setSoftwareBg(e.target.value)} className="auth-select">
-                      <option>Beginner (No coding)</option>
-                      <option>Intermediate (Some Python/JS)</option>
-                      <option>Advanced (Software Engineer)</option>
+                      <option value="Beginner">Beginner (No coding)</option>
+                      <option value="Intermediate">Intermediate (Some Python/JS)</option>
+                      <option value="Advanced">Advanced (Software Engineer)</option>
                     </select>
                   </div>
                   <div className="form-group">
                     <label>Hardware Background</label>
                     <select value={hardwareBg} onChange={e => setHardwareBg(e.target.value)} className="auth-select">
-                      <option>Beginner (Never built a PC/Robot)</option>
-                      <option>Intermediate (Arduino/Raspberry Pi)</option>
-                      <option>Advanced (Robotics Engineer)</option>
+                      <option value="Beginner">Beginner (Never built a PC/Robot)</option>
+                      <option value="Intermediate">Intermediate (Arduino/Raspberry Pi)</option>
+                      <option value="Advanced">Advanced (Robotics Engineer)</option>
                     </select>
                   </div>
                 </>

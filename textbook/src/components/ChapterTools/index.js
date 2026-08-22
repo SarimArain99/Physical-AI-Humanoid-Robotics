@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { useSession } from '../../utils/authClient';
 import { Globe, X, Loader2, BookOpen, ChevronRight, Layers } from 'lucide-react';
 import { marked } from 'marked';
@@ -108,6 +108,12 @@ export default function ChapterTools() {
     }
   };
 
+  // Use a ref to always have the latest handleTranslate available to event listeners
+  const handleTranslateRef = useRef(handleTranslate);
+  useEffect(() => {
+    handleTranslateRef.current = handleTranslate;
+  });
+
   // Setup event delegation and path-based visibility for navbar buttons
   useEffect(() => {
     const isDocPage = location.pathname.startsWith('/docs/');
@@ -116,19 +122,27 @@ export default function ChapterTools() {
       const translateBtns = document.querySelectorAll('.nav-translate-btn');
       const personalizeBtns = document.querySelectorAll('.nav-personalize-btn');
       
+      const targetDisplay = isDocPage ? 'flex' : 'none';
+
       translateBtns.forEach(btn => {
-        btn.style.setProperty('display', isDocPage ? 'flex' : 'none', 'important');
+        if (btn.style.display !== targetDisplay) {
+          btn.style.setProperty('display', targetDisplay, 'important');
+        }
       });
       personalizeBtns.forEach(btn => {
-        btn.style.setProperty('display', isDocPage ? 'flex' : 'none', 'important');
+        if (btn.style.display !== targetDisplay) {
+          btn.style.setProperty('display', targetDisplay, 'important');
+        }
       });
     };
 
     updateVisibility();
 
-    // Watch for dynamic DOM changes (mobile menu sidebar)
+    // Debounced MutationObserver to prevent cascading DOM mutation lag
+    let debounceTimer = null;
     const observer = new MutationObserver(() => {
-      updateVisibility();
+      if (debounceTimer) clearTimeout(debounceTimer);
+      debounceTimer = setTimeout(updateVisibility, 150);
     });
     observer.observe(document.body, { childList: true, subtree: true });
 
@@ -148,7 +162,7 @@ export default function ChapterTools() {
           if (loginBtn) loginBtn.click();
           return;
         }
-        handleTranslate();
+        handleTranslateRef.current();
       }
       
       if (personalizeBtn) {
@@ -169,6 +183,7 @@ export default function ChapterTools() {
     
     document.addEventListener('click', handleGlobalClick);
     return () => {
+      if (debounceTimer) clearTimeout(debounceTimer);
       observer.disconnect();
       document.removeEventListener('click', handleGlobalClick);
     };

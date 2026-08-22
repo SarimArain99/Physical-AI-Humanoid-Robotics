@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import './QuizWidget.css';
 import { useSession } from '@site/src/utils/authClient';
 import { getApiUrl } from '@site/src/utils/apiConfig';
@@ -12,6 +12,7 @@ export default function QuizWidget() {
   const [selectedOption, setSelectedOption] = useState(null);
   const [isAnswered, setIsAnswered] = useState(false);
   const [score, setScore] = useState(0);
+  const scoreRef = useRef(0);
   const [isFinished, setIsFinished] = useState(false);
   const { data: session } = useSession();
 
@@ -79,7 +80,8 @@ export default function QuizWidget() {
     setIsAnswered(true);
     
     if (index === questions[currentIndex].answerIndex) {
-      setScore(prev => prev + 1);
+      scoreRef.current += 1;
+      setScore(scoreRef.current);
     }
   };
 
@@ -93,7 +95,7 @@ export default function QuizWidget() {
       
       // Save progress to database
       if (session?.user?.id) {
-        const finalScore = score;
+        const finalScore = scoreRef.current;
         const total = questions.length;
         const percentage = Math.round((finalScore / total) * 100);
         

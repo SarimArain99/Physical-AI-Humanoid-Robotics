@@ -140,6 +140,16 @@
   font-size: 0.9rem;
 }
 
+.auth-success {
+  margin-bottom: 16px;
+  padding: 12px;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  background-color: rgba(16, 185, 129, 0.1);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  color: var(--success, #10B981);
+}
+
 .button--block {
   width: 100%;
   margin-top: 8px;

@@ -98,7 +98,7 @@ export default function Dashboard() {
         {/* Welcome Section */}
         <div className="dashboard-header-premium">
           <div className="header-info">
-            <h1>Welcome back, {session.user.name.split(' ')[0]}! 👋</h1>
+            <h1>Welcome back, {(session.user.name || 'Student').split(' ')[0]}! 👋</h1>
             <p>Track your textbook completion progress and review your AI test scores.</p>
           </div>
           <button 
