@@ -87,7 +87,7 @@ export default function AuthModal() {
         if (error) throw new Error(error.message);
         setIsOpen(false);
       } else if (view === 'signup') {
-        const { error } = await signUp.email({ email, password, name });
+        const { error } = await signUp.email({ email, password, name, softwareBg, hardwareBg });
         if (error) throw new Error(error.message);
         setIsOpen(false);
       } else if (view === 'forgot') {

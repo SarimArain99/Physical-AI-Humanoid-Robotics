@@ -78,8 +78,10 @@
   bottom: 0;
   width: 100%;
   max-width: 450px;
-  background-color: var(--surface);
-  border-left: 1px solid var(--border);
+  background-color: rgba(var(--surface-rgb), 0.7);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-left: 1px solid rgba(255, 255, 255, 0.1);
   box-shadow: -4px 0 24px rgba(0, 0, 0, 0.1);
   z-index: 1001;
   display: flex;
@@ -171,18 +173,21 @@
 /* Personalize Bar Sticky UI */
 .personalize-bar {
   position: fixed;
-  bottom: 24px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
-  z-index: 1000;
-  padding: 12px 20px;
+  top: 60px;
+  left: 0;
+  right: 0;
+  width: 100%;
+  background-color: rgba(var(--surface-rgb), 0.7);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
+  border-radius: 0;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  z-index: 99;
+  padding: 10px 24px;
   display: flex;
   align-items: center;
-  backdrop-filter: blur(12px);
+  justify-content: center;
 }
 
 .personalize-bar-inner {
@@ -267,45 +272,49 @@
 /* Mobile Responsive Adjustments for ChapterTools */
 @media (max-width: 768px) {
   .personalize-bar {
-    bottom: 84px;
-    width: calc(100% - 32px);
-    max-width: 420px;
-    padding: 10px 14px;
-    border-radius: 12px;
+    top: 60px;
+    bottom: auto;
+    left: 0;
+    transform: none;
+    width: 100%;
+    max-width: 100%;
+    padding: 8px 12px;
+    border-radius: 0;
   }
 
   .personalize-bar-inner {
     width: 100%;
-    flex-direction: column;
-    align-items: stretch;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
     gap: 8px;
-    position: relative;
   }
 
   .personalize-bar-title {
-    font-size: 0.85rem;
-    padding-right: 28px;
+    font-size: 0.75rem;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .personalize-bar-title span {
+    display: none; /* Hide 'Learning Level' label text, keep icon */
   }
 
   .personalize-close {
-    position: absolute;
-    top: 0;
-    right: 0;
+    padding: 4px;
   }
 
   .segmented-control {
-    width: 100%;
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 4px;
-    padding: 3px;
+    background: var(--background);
+    border-radius: 6px;
+    padding: 2px;
   }
 
   .segment-btn {
-    padding: 8px 10px;
-    font-size: 0.8rem;
-    justify-content: center;
-    text-align: center;
+    padding: 4px 8px;
+    font-size: 0.75rem;
   }
 
   .translation-panel {

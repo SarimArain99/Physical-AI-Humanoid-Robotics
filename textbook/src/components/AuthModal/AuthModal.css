@@ -1,7 +1,9 @@
 .auth-modal-backdrop {
   position: fixed;
   top: 0; left: 0; right: 0; bottom: 0;
-  background-color: rgba(11, 18, 32, 0.7);
+  background-color: rgba(11, 18, 32, 0.4);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -17,13 +19,16 @@
 
 .auth-modal {
   background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 12px;
+  background-color: rgba(var(--surface-rgb), 0.85); /* Requires surface-rgb token */
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
   width: 100%;
   max-width: 420px;
   max-height: 90vh;
   overflow-y: auto;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.2), 0 0 0 1px var(--border);
   animation: slideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 

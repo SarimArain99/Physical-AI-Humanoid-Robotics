@@ -45,6 +45,7 @@
 :root {
   --background: var(--color-off-white);
   --surface: var(--color-white);
+  --surface-rgb: 255, 255, 255;
   --surface-elevated: var(--color-white);
   
   --border: var(--color-slate-200);
@@ -91,6 +92,7 @@
 [data-theme='dark'] {
   --background: var(--color-deep-navy);
   --surface: var(--color-slate-navy);
+  --surface-rgb: 17, 24, 39;
   --surface-elevated: var(--color-dark-blue-surface);
   
   --border: #263247;
@@ -300,6 +302,27 @@ tr:nth-child(even) {
   border-color: var(--muted);
 }
 
+/* =========================================
+   7.5 PREMIUM 2026 AESTHETICS (GLASS & MOTION)
+========================================= */
+
+.glass-panel {
+  background-color: rgba(var(--surface-rgb), 0.7);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+.hover-lift {
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.hover-lift:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+}
+
 /* Disable neon globally without breaking glassmorphism */
 * {
   text-shadow: none;
@@ -316,9 +339,6 @@ tr:nth-child(even) {
 
 .navbar-sidebar__items {
   padding: 1rem !important;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
 }
 
 .navbar-sidebar__items > .menu__list-item {
@@ -349,10 +369,7 @@ tr:nth-child(even) {
   gap: 8px !important;
 }
 
-/* Hide the redundant "Back to main menu" button */
-.navbar-sidebar__back {
-  display: none !important;
-}
+/* Style close button */
 
 .navbar-sidebar__close {
   background: var(--surface-elevated);
@@ -367,4 +384,20 @@ tr:nth-child(even) {
 
 .navbar-sidebar__close:hover {
   opacity: 1;
+}
+
+/* Page Layout Shifts when Personalization Bar is Active */
+html.personalize-bar-open .main-wrapper {
+  margin-top: 42px !important;
+}
+
+html.personalize-bar-open .navbar-sidebar {
+  margin-top: 42px !important;
+}
+
+/* Fix mobile page content layout shift */
+@media (max-width: 768px) {
+  html.personalize-bar-open .main-wrapper {
+    margin-top: 48px !important; /* height of compact mobile personalize bar is 48px */
+  }
 }

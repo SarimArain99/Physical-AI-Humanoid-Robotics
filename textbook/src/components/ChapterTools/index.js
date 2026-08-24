@@ -35,6 +35,18 @@ export default function ChapterTools() {
     return () => { document.body.style.overflow = 'unset'; };
   }, [isPanelOpen]);
 
+  // Adjust page layout scroll offsets when personalization bar is open
+  useEffect(() => {
+    if (isPersonalizeOpen) {
+      document.documentElement.classList.add('personalize-bar-open');
+    } else {
+      document.documentElement.classList.remove('personalize-bar-open');
+    }
+    return () => {
+      document.documentElement.classList.remove('personalize-bar-open');
+    };
+  }, [isPersonalizeOpen]);
+
   const handleTranslate = async () => {
     setIsPanelOpen(true);
     setTranslationError('');

@@ -21,15 +21,25 @@ export default function AudioPlayer() {
     };
   }, []);
 
-  const getTextToRead = () => {
-    // Try to find the AI personalized content first
-    const customDiv = document.getElementById('ai-personalized-content');
-    if (customDiv && customDiv.style.display !== 'none') {
-      return customDiv.innerText;
+  const getActiveContent = () => {
+    // 1. Try to find Urdu translation content first if the translation panel is open
+    const translatePanel = document.querySelector('.translation-panel.open');
+    if (translatePanel) {
+      const urduDiv = translatePanel.querySelector('.urdu-text');
+      if (urduDiv && urduDiv.innerText.trim()) {
+        return { text: urduDiv.innerText, lang: 'ur' };
+      }
     }
-    // Otherwise fallback to original markdown
+
+    // 2. Try to find the AI personalized content
+    const customDiv = document.getElementById('ai-personalized-content');
+    if (customDiv && customDiv.style.display !== 'none' && customDiv.innerText.trim()) {
+      return { text: customDiv.innerText, lang: 'en' };
+    }
+
+    // 3. Otherwise fallback to original markdown
     const article = document.querySelector('article .theme-doc-markdown');
-    return article ? article.innerText : '';
+    return { text: article ? article.innerText : '', lang: 'en' };
   };
 
   const handlePlay = () => {
@@ -40,11 +50,22 @@ export default function AudioPlayer() {
       return;
     }
 
-    const text = getTextToRead();
+    const { text, lang } = getActiveContent();
     if (!text) return;
 
     window.speechSynthesis.cancel();
     const u = new SpeechSynthesisUtterance(text);
+    u.lang = lang === 'ur' ? 'ur-PK' : 'en-US';
+    
+    // Attempt to set matching voice
+    if (window.speechSynthesis.getVoices) {
+      const voices = window.speechSynthesis.getVoices();
+      const targetLang = lang === 'ur' ? 'ur' : 'en';
+      const matchingVoice = voices.find(v => v.lang.toLowerCase().startsWith(targetLang));
+      if (matchingVoice) {
+        u.voice = matchingVoice;
+      }
+    }
     
     u.onend = () => {
       setIsPlaying(false);
